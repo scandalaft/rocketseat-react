@@ -1,20 +1,52 @@
 {
-    "transactions": [
-        {
-            "id":1,
-            "description":"Desenvolvimento de app",
-            "type":"income",
-            "category":"Venda",
-            "price":14000,
-            "createdAt":"2024-07-10T22:36:11.999Z"
-        },
-        {
-            "id":2,
-            "description":"Hamburguer",
-            "type":"outcome",
-            "category":"Alimentação",
-            "price":50,
-            "createdAt":"2024-07-10T22:33:11.999Z"
-        }
-    ]
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Desenvolvimento de app",
+      "type": "income",
+      "category": "Venda",
+      "price": 9500,
+      "createdAt": "2024-07-10T22:36:11.999Z"
+    },
+    {
+      "id": 2,
+      "description": "Ifood jantar",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": 60,
+      "createdAt": "2024-07-08T22:33:11.999Z"
+    },
+    {
+      "id": 3,
+      "description": "Aluguel ap",
+      "type": "outcome",
+      "category": "Casa",
+      "price": 1200,
+      "createdAt": "2024-07-05T22:36:11.999Z"
+    },
+    {
+      "id": 4,
+      "description": "Peças computador",
+      "type": "income",
+      "category": "Venda",
+      "price": 835,
+      "createdAt": "2024-07-05T22:36:11.999Z"
+    },
+    {
+      "id": "2667",
+      "description": "Salário",
+      "category": "Venda",
+      "price": 6800,
+      "type": "income",
+      "createdAt": "2024-07-19T22:19:27.817Z"
+    },
+    {
+      "id": "e55f",
+      "description": "Jantar",
+      "category": "Alimentação",
+      "price": 45,
+      "type": "outcome",
+      "createdAt": "2024-07-19T22:37:03.596Z"
+    }
+  ]
 }

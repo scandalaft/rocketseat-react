@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface TransactionProps {
     id: number,
@@ -9,8 +10,17 @@ interface TransactionProps {
     createdAt: string
 }
 
+interface CreateTRansactionInput {
+    description: string,
+    price: number,
+    category: string,
+    type: 'income' | 'outcome',
+}
+
 interface TransactionContextType {
-    transactions: TransactionProps[]
+    transactions: TransactionProps[];
+    fetchTransactions: (query?: string) => Promise<void>;
+    createTransaction: (data: CreateTRansactionInput) => Promise<void>
 }
 
 interface TransactionsProviderProps {
@@ -23,19 +33,42 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     //criando estado para armazenar as informações das transactions 
     const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
-    /* vai disparar a função apenas uma unica vez, ao inves de sempre que o componente renderizar
-       obs: nao podemos usar funções assincronas dentro do useEffect, no arquivo exemplo.tsx tem um modelo de 
-       como poderiamos usar as funções assincronas dentro do useEffect, retornando a mesma coisa que retornamos aqui */
-    useEffect(() => {
-        fetch('http://localhost:3000/transactions')//chama a url, e irá devolver uma resposta através do conceito de promise (.then)
-        .then(response => response.json()) //retorna no formato de objeto javascript através de uma promise
-        .then(data => { 
-            setTransactions(data)
+    async function fetchTransactions(query?: string) {
+        const response = await api.get('transactions', {
+            params: {
+                _sort: 'createdAt',
+                _order: 'desc',
+                q: query,
+            }
         })
+
+        setTransactions(response.data)
+    }
+
+    async function createTransaction(data: CreateTRansactionInput) {
+        const { description, category, price, type } = data;
+
+        const response = await api.post('transactions', {
+            description,
+            category,
+            price,
+            type,
+            createdAt: new Date(),
+       })
+
+       setTransactions(state => [response.data, ...state])
+    } 
+
+    useEffect(() => {
+        fetchTransactions();
     }, [])
     
     return (
-        <TransactionsContext.Provider value={{ transactions }}>
+        <TransactionsContext.Provider value={{ 
+            transactions,
+            fetchTransactions,
+            createTransaction,
+        }}>
             {children}
         </TransactionsContext.Provider>
     )
